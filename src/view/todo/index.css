@@ -1,0 +1,59 @@
+.todo {
+  background: whitesmoke;
+  border-radius: 6px;
+  box-shadow: 0 0 1px 1px gainsboro;
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  margin: 5vh 20vw;
+  overflow: hidden;
+  position: relative;
+}
+
+.todo-body {
+  flex: 1;
+  line-height: 2;
+  list-style: none;
+  margin: 16px;
+  overflow-y: auto;
+  padding: 0;
+  text-align: left;
+}
+
+.todo-isDone {
+  color: grey;
+  text-decoration: line-through;
+}
+
+.todo-desc {
+  margin-left: 3px;
+}
+
+.todo-assigners {
+  margin: 6px;
+}
+
+.todo-assigners span {
+  margin: 3px;
+}
+
+.todo-content:not(.todo-isDone) .todo-assigners span {
+  color: mediumblue;
+}
+
+.todo-isDelay:not(.todo-isDone) .todo-deadline {
+  color: red;
+}
+
+.todo-actions {
+  align-items: center;
+  background: #282c34;
+  display: flex;
+  height: 48px;
+  justify-content: center;
+}
+
+.todo-actions button {
+  margin: 0 8px;
+  padding: 6px 8px;
+}

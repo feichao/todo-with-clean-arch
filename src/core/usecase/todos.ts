@@ -18,6 +18,17 @@ export default class UCTodo {
     const todos = this.todoDomain.getAll();
     const users = this.userDomain.getAll();
 
+    const usersObj = {} as { [key: string]: IUser };
+    users.forEach(user => {
+      usersObj[user.id] = user;
+    });
+
+    return todos.map(todo => {
+      return {
+        ...todo,
+        assigners: todo.assigners?.map(a => usersObj[a]).filter(a => a) || []
+      }
+    });
   }
 
   public get(id: string): ITodo | undefined {

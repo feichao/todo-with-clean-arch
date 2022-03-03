@@ -1,38 +1,48 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { IUCTodo } from '../../core/usecase/todos';
 import IOCUseCase from '../../ioc/usecase';
 
 import './index.css';
 
 function Todo() {
-  const todoModel = useState({
-    todos: {
-      
-    }
-  });
+  const [todos, setTodo] = useState([] as IUCTodo[]);
   
-  // create button controller
   const createHandler = useCallback(() => {
 
   }, []);
 
-  // delete button controller
   const deleteHandler = useCallback(() => {
 
   }, []);
 
   useEffect(() => {
-    console.log(IOCUseCase.UCTodo.getAll());
+    setTodo(IOCUseCase.UCTodo.getAll());
   }, []);
 
   return (
     <div className="todo">
-      <header className="todo-header"></header>
-      <ul>
-        <li></li>
+      <ul className="todo-body">
+        { todos.map(todo => (
+          <li key={todo.id} className={["todo-content", todo.isDone ? "todo-isDone" : "", (todo.deadline && todo.deadline < Date.now()) ? "todo-isDelay" : ""].join(' ')}>
+            <input type="checkbox" checked={todo.isDone} />
+            <span className="todo-desc">{todo.desc}</span>
+            <span className="todo-assigners">
+            {
+              Array.isArray(todo.assigners) && todo.assigners.map(user => (
+                <span key={todo.id}>@{user.name}</span>
+              ))
+            }
+            </span>
+            { todo.deadline ? <span className="todo-deadline">{new Date(+todo.deadline).toLocaleString()}</span> : null}
+          </li>
+        ))
+        }
       </ul>
-      <button onClick={createHandler}>Creata Todo</button>
-      <button onClick={deleteHandler}>Delete Todo</button>
+      <div className="todo-actions">
+        <button onClick={createHandler}>Creata Todo</button>
+        <button onClick={deleteHandler}>Delete Todo</button>
+      </div>
     </div>
   );
 }

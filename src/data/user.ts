@@ -1,6 +1,6 @@
 import { IUser, IUserData } from "../core/domain/users";
 
-const KEY = 'CleanTodo::User';
+const KEY = 'CleanTodo::Users';
 
 export default class DataUser implements IUserData {
   get(): IUser[] {

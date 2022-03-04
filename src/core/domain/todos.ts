@@ -9,8 +9,15 @@ export interface ITodo {
   updateDate: number;
 }
 
+export interface ITodoCreation {
+  desc: string;
+  assigners?: string[];
+  deadline?: number;
+}
+
 export interface ITodoData {
   get: () => ITodo[];
+  add: (todo: ITodoCreation) => boolean;
   set: (todo: ITodo) => boolean;
   del: (id: string) => boolean;
 }
@@ -30,11 +37,21 @@ export default class DMTodos {
     return this.req.get().find(todo => todo.id === id);
   }
 
+  public add(todo: ITodoCreation): boolean {
+    
+    return true;
+  }
+
   public delete(id: string): boolean {
     return true;
   }
 
   public update(id: string, todo: Partial<ITodo>): boolean {
-    return true;
+    const t = this.get(id);
+    if (!t) {
+      return false;
+    }
+
+    return this.req.set({...t, ...todo, updateDate: +new Date()});
   }
 }

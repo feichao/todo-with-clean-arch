@@ -16,6 +16,11 @@ function Todo() {
 
   }, []);
 
+  const updateHandler =  useCallback((id: string, isChecked: boolean) => {
+    isChecked ? IOCUseCase.UCTodo.setDone(id) : IOCUseCase.UCTodo.setUndone(id);
+    setTodo(IOCUseCase.UCTodo.getAll());
+  }, []);
+
   useEffect(() => {
     setTodo(IOCUseCase.UCTodo.getAll());
   }, []);
@@ -25,7 +30,7 @@ function Todo() {
       <ul className="todo-body">
         { todos.map(todo => (
           <li key={todo.id} className={["todo-content", todo.isDone ? "todo-isDone" : "", (todo.deadline && todo.deadline < Date.now()) ? "todo-isDelay" : ""].join(' ')}>
-            <input type="checkbox" checked={todo.isDone} />
+            <input type="checkbox" checked={todo.isDone} onChange={(event) => updateHandler(todo.id, event.target.checked)}/>
             <span className="todo-desc">{todo.desc}</span>
             <span className="todo-assigners">
             {

@@ -20,6 +20,11 @@
   text-align: left;
 }
 
+.todo-content {
+  display: flex;
+  justify-content: space-between;
+}
+
 .todo-isDone {
   color: grey;
   text-decoration: line-through;

@@ -43,7 +43,7 @@ export default class DMTodos {
   }
 
   public delete(id: string): boolean {
-    return true;
+    return this.req.del(id);
   }
 
   public update(id: string, todo: Partial<ITodo>): boolean {

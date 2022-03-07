@@ -12,8 +12,9 @@ function Todo() {
 
   }, []);
 
-  const deleteHandler = useCallback(() => {
-
+  const deleteHandler = useCallback((id: string) => {
+    IOCUseCase.UCTodo.delete(id);
+    setTodo(IOCUseCase.UCTodo.getAll());
   }, []);
 
   const updateHandler =  useCallback((id: string, isChecked: boolean) => {
@@ -30,23 +31,27 @@ function Todo() {
       <ul className="todo-body">
         { todos.map(todo => (
           <li key={todo.id} className={["todo-content", todo.isDone ? "todo-isDone" : "", (todo.deadline && todo.deadline < Date.now()) ? "todo-isDelay" : ""].join(' ')}>
-            <input type="checkbox" checked={todo.isDone} onChange={(event) => updateHandler(todo.id, event.target.checked)}/>
-            <span className="todo-desc">{todo.desc}</span>
-            <span className="todo-assigners">
-            {
-              Array.isArray(todo.assigners) && todo.assigners.map(user => (
-                <span key={todo.id}>@{user.name}</span>
-              ))
-            }
-            </span>
-            { todo.deadline ? <span className="todo-deadline">{new Date(+todo.deadline).toLocaleString()}</span> : null}
+            <div>
+              <input type="checkbox" checked={todo.isDone} onChange={(event) => updateHandler(todo.id, event.target.checked)}/>
+              <span className="todo-desc">{todo.desc}</span>
+              <span className="todo-assigners">
+              {
+                Array.isArray(todo.assigners) && todo.assigners.map(user => (
+                  <span key={user.id}>@{user.name}</span>
+                ))
+              }
+              </span>
+              { todo.deadline ? <span className="todo-deadline">{new Date(+todo.deadline).toLocaleString()}</span> : null}
+            </div>
+            <div>
+              <button onClick={() => deleteHandler(todo.id)}>Delete</button>
+            </div>
           </li>
         ))
         }
       </ul>
       <div className="todo-actions">
         <button onClick={createHandler}>Creata Todo</button>
-        <button onClick={deleteHandler}>Delete Todo</button>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import ids from '../../util/id';
 export interface ITodo {
   id: string;
   desc: string;
@@ -17,7 +18,7 @@ export interface ITodoCreation {
 
 export interface ITodoData {
   get: () => ITodo[];
-  add: (todo: ITodoCreation) => boolean;
+  add: (id: string, todo: ITodoCreation) => boolean;
   set: (todo: ITodo) => boolean;
   del: (id: string) => boolean;
 }
@@ -38,8 +39,8 @@ export default class DMTodos {
   }
 
   public add(todo: ITodoCreation): boolean {
-    
-    return true;
+    const id = ids.createTodoID()
+    return this.req.add(id, todo);
   }
 
   public delete(id: string): boolean {

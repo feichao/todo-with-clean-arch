@@ -35,6 +35,14 @@ export default class UCTodo {
     return this.todoDomain.get(id);
   }
 
+  public add(desc: string, assigners?: string[], deadline?: number): boolean {
+    return this.todoDomain.add({
+      desc,
+      assigners,
+      deadline
+    });
+  }
+
   public delete(id: string): boolean {
     return this.todoDomain.delete(id);
   }

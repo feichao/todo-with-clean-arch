@@ -16,8 +16,23 @@ export default class DataTodo implements ITodoData {
     }
   }
 
-  add(todo: ITodoCreation): boolean {
-    return true;
+  add(id: string, todo: ITodoCreation): boolean {
+    try {
+      const todos = this.get();
+      todos.push({
+        id,
+        ...todo,
+        createDate: +new Date(),
+        updateDate: +new Date(),
+        createdBy: '900000001',
+        isDone: false
+      });
+      localStorage.setItem(KEY, JSON.stringify(todos));
+      return true;
+    } catch(exception) {
+      console.error(exception);
+      return false;
+    }
   }
 
   set(todo: ITodo): boolean {
@@ -68,7 +83,7 @@ window.initData = function() {
     id: 100000002,
     desc: '选举文档委员和技术委员',
     isDone: true,
-    assigners: [900000001, 900000002],
+    assigners: [900000001, 900000002, 900000004],
     createdBy: 900000001,
     deadline: 1646126237000,
     createDate: 1646093837000,
@@ -86,7 +101,7 @@ window.initData = function() {
     id: 100000004,
     desc: '完成新技术架构的 Demo',
     isDone: false,
-    assigners: [900000001],
+    assigners: [900000001, 900000003],
     createdBy: 900000001,
     deadline: 1646282036500,
     createDate: 1646093837000,
@@ -101,7 +116,19 @@ window.initData = function() {
     updateDate: 1641014237000,
   },{
     id: 900000002,
-    name: 'Dadiwang',
+    name: 'Lily',
+    avatar: '',
+    createDate: 1641014237000,
+    updateDate: 1641014237000,
+  }, {
+    id: 900000003,
+    name: 'Duck',
+    avatar: '',
+    createDate: 1641014237000,
+    updateDate: 1641014237000,
+  }, {
+    id: 900000004,
+    name: 'Make',
     avatar: '',
     createDate: 1641014237000,
     updateDate: 1641014237000,

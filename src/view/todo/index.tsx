@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import TodoItem from './component/TodoItem';
+import CreateTodoModal from './component/CreateTodoModal';
 
 import { IUCTodo } from '../../core/usecase/todos';
 import IOCUseCase from '../../ioc/usecase';
@@ -10,10 +11,11 @@ import './index.css';
 function Todo() {
   const [isBatchDel, setBatchDel] = useState(false);
   const [batchDelItems, setBatchDelItems] = useState([] as string[]);
+  const [isCreateTodoModalVisible, setCreateTodoModalVisible] = useState(false);
   const [todos, setTodo] = useState([] as IUCTodo[]);
   
   const createHandler = useCallback(() => {
-
+    setCreateTodoModalVisible(true);
   }, []);
 
   const deleteHandler = useCallback((id: string) => {
@@ -91,6 +93,7 @@ function Todo() {
           </div>
         )
       }
+      <CreateTodoModal isVisible={isCreateTodoModalVisible} closeHandler={() => setCreateTodoModalVisible(false)}/>
     </div>
   );
 }

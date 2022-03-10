@@ -1,0 +1,35 @@
+.create-todo-modal {
+  background: white;
+  border-radius: 5px;
+  padding: 12px 20px;
+}
+
+.create-todo-modal .item-block {
+  align-items: center;
+  display: flex;
+  margin: 16px 0;
+  text-align: left;
+}
+
+.create-todo-modal .item-block label {
+  width: 100px;
+}
+
+.create-todo-modal .item-block input,
+.create-todo-modal .item-block select {
+  flex: 1;
+}
+
+.create-modal-actions {
+  margin: 36px 0 12px;
+  text-align: right;
+}
+
+.create-modal-actions input {
+  margin: 2px 0;
+  padding: 6px 12px;
+}
+
+.create-modal-actions input + input {
+  margin-left: 8px;
+}

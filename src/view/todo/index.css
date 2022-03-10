@@ -25,29 +25,9 @@
   justify-content: space-between;
 }
 
-.todo-isDone {
-  color: grey;
-  text-decoration: line-through;
-}
-
-.todo-desc {
-  margin-left: 3px;
-}
-
-.todo-assigners {
-  margin: 6px;
-}
-
-.todo-assigners span {
-  margin: 3px;
-}
-
-.todo-content:not(.todo-isDone) .todo-assigners span {
-  color: mediumblue;
-}
-
-.todo-isDelay:not(.todo-isDone) .todo-deadline {
-  color: red;
+.todo-item-wrapper {
+  align-items: center;
+  display: flex;
 }
 
 .todo-actions {
@@ -59,6 +39,6 @@
 }
 
 .todo-actions button {
-  margin: 0 8px;
+  margin: 2px 8px;
   padding: 6px 8px;
 }

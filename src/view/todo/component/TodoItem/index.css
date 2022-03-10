@@ -1,0 +1,24 @@
+.todo-isDone {
+  color: grey;
+  text-decoration: line-through;
+}
+
+.todo-desc {
+  margin-left: 3px;
+}
+
+.todo-assigners {
+  margin: 6px;
+}
+
+.todo-assigners span {
+  margin: 3px;
+}
+
+.todo-item:not(.todo-isDone) .todo-assigners span {
+  color: mediumblue;
+}
+
+.todo-isDelay:not(.todo-isDone) .todo-deadline {
+  color: red;
+}

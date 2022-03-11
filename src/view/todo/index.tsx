@@ -3,16 +3,22 @@ import { useCallback, useEffect, useState } from 'react';
 import TodoItem from './component/TodoItem';
 import CreateTodoModal from './component/CreateTodoModal';
 
-import { IUCTodo } from '../../core/usecase/todos';
+import { useAppSelector, useAppDispatch } from '../../viewmodel';
+
 import IOCUseCase from '../../ioc/usecase';
+import { IUCTodo } from '../../core/usecase/todos';
+import { setTodos } from '../../viewmodel/vm-todo';
 
 import './index.css';
 
+
 function Todo() {
+  const dispatch = useAppDispatch();
+  const todos = useAppSelector(s => s.todo.todos);
   const [isBatchDel, setBatchDel] = useState(false);
   const [batchDelItems, setBatchDelItems] = useState([] as string[]);
   const [isCreateTodoModalVisible, setCreateTodoModalVisible] = useState(false);
-  const [todos, setTodo] = useState([] as IUCTodo[]);
+  // const [todos, setTodo] = useState([] as IUCTodo[]);
   
   const createHandler = useCallback(() => {
     setCreateTodoModalVisible(true);
@@ -20,7 +26,7 @@ function Todo() {
 
   const deleteHandler = useCallback((id: string) => {
     IOCUseCase.UCTodo.delete(id);
-    setTodo(IOCUseCase.UCTodo.getAll());
+    getTodos();
   }, []);
 
   const batchDelHandler = useCallback(() => {
@@ -29,7 +35,7 @@ function Todo() {
 
   const updateHandler =  useCallback((id: string, isChecked: boolean) => {
     isChecked ? IOCUseCase.UCTodo.setDone(id) : IOCUseCase.UCTodo.setUndone(id);
-    setTodo(IOCUseCase.UCTodo.getAll());
+    getTodos();
   }, []);
 
   const selectBatchDelItemsHandler = useCallback((id: string, isChecked: boolean) => {
@@ -44,7 +50,7 @@ function Todo() {
 
   const confirmBatchDelHandler = useCallback(() => {
     batchDelItems.forEach(id => IOCUseCase.UCTodo.delete(id));
-    setTodo(IOCUseCase.UCTodo.getAll());
+    getTodos();
   }, [batchDelItems]);
 
   const cancelBatchDelHandler = useCallback(() => {
@@ -52,8 +58,12 @@ function Todo() {
     setBatchDelItems([]);
   }, []);
 
+  const getTodos = useCallback(() => {
+    dispatch(setTodos(IOCUseCase.UCTodo.getAll()));
+  }, []);
+
   useEffect(() => {
-    setTodo(IOCUseCase.UCTodo.getAll());
+    getTodos();
   }, []);
 
   return (
@@ -66,7 +76,7 @@ function Todo() {
               <TodoItem todo={todo}/>
             </div>
             {
-              isBatchDel ?(
+              isBatchDel ? (
                 <div>
                   <input type="checkbox" onChange={(event) => selectBatchDelItemsHandler(todo.id, event.target.checked)}/>
                 </div>

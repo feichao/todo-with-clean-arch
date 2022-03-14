@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 
-import store from './viewmodel'
+import './mock';
+
+import store from './viewmodel';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';

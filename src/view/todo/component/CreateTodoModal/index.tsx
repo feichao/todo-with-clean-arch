@@ -1,6 +1,9 @@
 import { SyntheticEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { IUser } from '../../../../core/domain/users';
 
+import { setTodos } from '../../../../viewmodel/vm-todo';
+import { useAppDispatch } from '../../../../viewmodel';
+
 import IOCUseCase from '../../../../ioc/usecase';
 
 import Modal from '../Modal';
@@ -14,6 +17,8 @@ interface ICreateTodo {
 
 const CreateTodoModal: React.FC<ICreateTodo> = ({ isVisible, closeHandler = () => {} }) => {
   const formRef = useRef(null);
+  const dispatch = useAppDispatch();
+
   const [users, setUsers] = useState([] as IUser[]);
   const [title, setTitle] = useState('');
   const [assigners, setAssigners] = useState([] as string[]);
@@ -23,6 +28,7 @@ const CreateTodoModal: React.FC<ICreateTodo> = ({ isVisible, closeHandler = () =
     event.preventDefault();
     if (formRef.current && (formRef.current as HTMLFormElement).checkValidity()) {
       IOCUseCase.UCTodo.add(title, assigners, +new Date(deadline));
+      dispatch(setTodos(IOCUseCase.UCTodo.getAll()));
       closeHandler();
     }
   };

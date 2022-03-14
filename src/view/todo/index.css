@@ -30,6 +30,21 @@
   display: flex;
 }
 
+.todo-create-tip {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 40%;
+}
+
+.todo-create-tip button {
+  margin: 2px 8px;
+  padding: 6px 8px;
+}
+
 .todo-actions {
   align-items: center;
   background: #282c34;

@@ -4,13 +4,11 @@ import TodoItem from './component/TodoItem';
 import CreateTodoModal from './component/CreateTodoModal';
 
 import { useAppSelector, useAppDispatch } from '../../viewmodel';
-
-import IOCUseCase from '../../ioc/usecase';
-import { IUCTodo } from '../../core/usecase/todos';
 import { setTodos } from '../../viewmodel/vm-todo';
 
-import './index.css';
+import IOCUseCase from '../../ioc/usecase';
 
+import './index.css';
 
 function Todo() {
   const dispatch = useAppDispatch();
@@ -18,7 +16,6 @@ function Todo() {
   const [isBatchDel, setBatchDel] = useState(false);
   const [batchDelItems, setBatchDelItems] = useState([] as string[]);
   const [isCreateTodoModalVisible, setCreateTodoModalVisible] = useState(false);
-  // const [todos, setTodo] = useState([] as IUCTodo[]);
   
   const createHandler = useCallback(() => {
     setCreateTodoModalVisible(true);
@@ -62,6 +59,11 @@ function Todo() {
     dispatch(setTodos(IOCUseCase.UCTodo.getAll()));
   }, []);
 
+  const createMockData = useCallback(() => {
+    window.initData();
+    getTodos();
+  }, []);
+
   useEffect(() => {
     getTodos();
   }, []);
@@ -91,6 +93,11 @@ function Todo() {
         }
       </ul>
       {
+        todos.length <= 0 && (
+          <div className="todo-create-tip">Click 'Create Todo' To Start Or <button onClick={createMockData}>Create Mock Datas</button></div>
+        )
+      }
+      {
         isBatchDel ? (
           <div className="todo-actions">
             <button onClick={confirmBatchDelHandler}>Batch Delete</button>
@@ -98,7 +105,7 @@ function Todo() {
           </div>
         ) : (
           <div className="todo-actions">
-            <button onClick={createHandler}>Creata Todo</button>
+            <button onClick={createHandler}>Create Todo</button>
             <button onClick={batchDelHandler}>Batch Delete</button>
           </div>
         )
